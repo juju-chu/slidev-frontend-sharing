@@ -15,3 +15,4 @@ Learn more about Slidev at the [documentation](https://sli.dev/).
 ## List of Slides
 
 - [Whatsapp 訊息格式](https://fe-sharing-20250522.netlify.app/1)
+- [探討 JavaScript 的參數傳遞](https://js-parameter-passing.netlify.app/1)
