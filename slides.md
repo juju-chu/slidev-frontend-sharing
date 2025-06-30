@@ -177,10 +177,8 @@ int main(){
 完成！
 謝謝收聽
 
----
 theme: shibainu
 css: unocss
----
 
 <style>
 .slidev-code {
