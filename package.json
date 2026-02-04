@@ -8,11 +8,17 @@
     "export": "slidev export"
   },
   "dependencies": {
+    "@ktym4a/slidev-theme-ktym4a": "^0.3.2",
     "@slidev/cli": "^51.6.0",
     "@slidev/theme-bricks": "^0.25.0",
     "@slidev/theme-default": "latest",
     "@slidev/theme-seriph": "latest",
     "@slidev/theme-shibainu": "^0.25.0",
     "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.24",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.18"
   }
 }

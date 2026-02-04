@@ -1,625 +1,309 @@
 ---
-theme: shibainu
-title: 我的 Chill 技術簡報
-author: 你的小名子
-date: 2025-05-19
+theme: '@ktym4a/slidev-theme-ktym4a'
+title: Chat to Order 基本設定
+author: Juju Chu
+date: 2026-02-07
+slide-number: true
 ---
 
-# Sharing 2025.05.22
+# SHARING 2026.02
 
 Juju
 
 ---
 
-# 📦 Whatsapp 訊息格式
+# 🪄 Chat to Order 基本設定
+加功能 & 重排版 => 適合搬家
 
-- [Whatsapp 訊息格式官網文件](https://faq.whatsapp.com/539178204879377/?helpref=uf_share&cms_platform=web)
-- 檔案
-  - **niffler**: src/components/TemplateMessageModal/whatsappPreview.ts
-  - **Asgard**: src/components/messagePreview/whatsappPreview.js
-- 使用到的 AI 工具
-  - [ChatGPT](https://chat.openai.com/chat)
-  - [Windsurf](https://www.windsurfrs.ai/)
-  - [Cursor](https://cursor.com/)
+- <Link to="ui" title="設計畫面差異" />
+- <Link to="ai" title="愚公移山混合 AI 協助" />
+- <Link to="guideline" title="共用元件" />
+- <Link to="test" title="用 AI 寫測試" />
+---
+routeAlias: ui
+---
+
+# 🎨 設計畫面差異
+- 下半部設定區變成 tab 分頁
+<div class="flex gap-x-[8px]">
+  <img src="./public/assets/old_ui.png" class="w-1/2" />
+  <img src="./public/assets/new_ui.png" class="w-1/2" />
+</div>
 
 ---
 
-# 🧱whatsappPreview.ts
-```js
-export function whatsappTextFormat(text: string, type?: SENDER_TYPE) {
-  if (!text) return '';
-
-  /* 處理換行 */
-  let formattedText = text.replace(/\n/g, '<br>');
-  /* 處理項目符號、數字列表 */
-  formattedText = listFormat(formattedText);
-  /* 處理不支援交叉樣式的格式 */
-  formattedText = unsupportedCrossFormats(formattedText, type);
-  /* 處理其他格式規則，但跳過已經被 Monospace 和內嵌程式碼包住的內容 */
-  formattedText = otherFormat(formattedText);
-  /* 處理引用 */
-  formattedText = quoteFormat(formattedText, type);
-  /* 移除多餘的 <br> */
-  formattedText = formattedText.replace(/<\/ul>\s*<br\s*\/?>(?!\s*$)/gi, '</ul>');
-  formattedText = formattedText.replace(/<\/ol>\s*<br\s*\/?>(?!\s*$)/gi, '</ol>');
-
-  return formattedText;
-}
-```
+# 🎨 設計畫面差異
+- tab 像 ant-design 的 [Tabs](https://www.antdv.com/components/tabs/#Tabs)
+<div class="flex items-start gap-x-[8px]">
+  <img src="./public/assets/tabs_ui.png" class="w-1/2" />
+  <img src="./public/assets/tabs_ant.png" class="w-1/2 object-contain" />
+</div>
 
 ---
-
-# 🧱whatsappPreview.ts
-```js {1,2}
-export function whatsappTextFormat(text: string, type?: SENDER_TYPE) {
-  if (!text) return '';
-
-  /* 處理換行 */
-  let formattedText = text.replace(/\n/g, '<br>');
-  /* 處理項目符號、數字列表 */
-  formattedText = listFormat(formattedText);
-  /* 處理不支援交叉樣式的格式 */
-  formattedText = unsupportedCrossFormats(formattedText, type);
-  /* 處理其他格式規則，但跳過已經被 Monospace 和內嵌程式碼包住的內容 */
-  formattedText = otherFormat(formattedText);
-  /* 處理引用 */
-  formattedText = quoteFormat(formattedText, type);
-  /* 移除多餘的 <br> */
-  formattedText = formattedText.replace(/<\/ul>\s*<br\s*\/?>(?!\s*$)/gi, '</ul>');
-  formattedText = formattedText.replace(/<\/ol>\s*<br\s*\/?>(?!\s*$)/gi, '</ol>');
-
-  return formattedText;
-}
-```
-
+routeAlias: ai
 ---
 
-# 🧱whatsappPreview.ts
-```js {1,4-5}
-export function whatsappTextFormat(text: string, type?: SENDER_TYPE) {
-  if (!text) return '';
-
-  /* 處理換行 */
-  let formattedText = text.replace(/\n/g, '<br>');
-  /* 處理項目符號、數字列表 */
-  formattedText = listFormat(formattedText);
-  /* 處理不支援交叉樣式的格式 */
-  formattedText = unsupportedCrossFormats(formattedText, type);
-  /* 處理其他格式規則，但跳過已經被 Monospace 和內嵌程式碼包住的內容 */
-  formattedText = otherFormat(formattedText);
-  /* 處理引用 */
-  formattedText = quoteFormat(formattedText, type);
-  /* 移除多餘的 <br> */
-  formattedText = formattedText.replace(/<\/ul>\s*<br\s*\/?>(?!\s*$)/gi, '</ul>');
-  formattedText = formattedText.replace(/<\/ol>\s*<br\s*\/?>(?!\s*$)/gi, '</ol>');
-
-  return formattedText;
-}
-```
+# 💪 愚公移山混合 AI 協助
+- 一次一個元件或一個區域
+- 可能會需要調整元件
+<div class="flex items-start gap-x-[8px]">
+  <img src="./public/assets/button_1.png" class="w-1/2 h-auto max-h-[50vh] object-contain" />
+  <img src="./public/assets/button_2.png" class="w-1/3 h-auto max-h-[50vh] object-contain" />
+</div>
 
 ---
-
-# 🧱whatsappPreview.ts
-```js {1,6-7}
-export function whatsappTextFormat(text: string, type?: SENDER_TYPE) {
-  if (!text) return '';
-
-  /* 處理換行 */
-  let formattedText = text.replace(/\n/g, '<br>');
-  /* 處理項目符號、數字列表 */
-  formattedText = listFormat(formattedText);
-  /* 處理不支援交叉樣式的格式 */
-  formattedText = unsupportedCrossFormats(formattedText, type);
-  /* 處理其他格式規則，但跳過已經被 Monospace 和內嵌程式碼包住的內容 */
-  formattedText = otherFormat(formattedText);
-  /* 處理引用 */
-  formattedText = quoteFormat(formattedText, type);
-  /* 移除多餘的 <br> */
-  formattedText = formattedText.replace(/<\/ul>\s*<br\s*\/?>(?!\s*$)/gi, '</ul>');
-  formattedText = formattedText.replace(/<\/ol>\s*<br\s*\/?>(?!\s*$)/gi, '</ol>');
-
-  return formattedText;
-}
-```
-
+routeAlias: guideline
 ---
 
-# listFormat
-- 項目符號清單
-  - \* 文字
-  - \- 文字
-- 數字列表
-  - 1. 文字
-  - 2. 文字
-
----
-
-# listFormat
-項目符號清單
-- 拆開每一行 
-```js
-const processedText = formattedText.split(/\n|<br>/);
-```
-
-- 依是否符合條件分組
-```js
-const listItems = [];
-let others = [];
-
-processedText.forEach((item, index) => {
-  if (/^[-*]\s/.test(item)) {
-    listItems.push({ item, index });
-  } else {
-    others.push({ item, index });
-  }
+# 🛠️ 共用元件
+- Design guideline 找元件使用方式
+- 有加 props 會自動長出
+- 可以另外加描述（ChannelSelector.examples.vue）
+```js{6}
+const propsDescriptions = ref<PartialPropsKey<Props>>({
+  excludedPlatforms: '排除特定 platform',
+  specificPlatforms: '指定特定 platform，和 excludedPlatforms 請擇一使用',
+  filteredChannels: '過濾特定 channel Id',
+  useMessengerIcon: '使用 FB icon (不使用 Messenger icon)',
+  manualMode: '開啟手動模式可指定channel',
 });
 ```
 
 ---
 
-# listFormat
-項目符號清單
-
-- 逐行套 \<li\> 並保留 index 用於後續分組
-```js
-const liListItems = listItems.map((item) => ({
-  index: item.index,
-  item: `<li>${item.item.slice(2)}</li>`,
-}));
-```
+# 🛠️ 共用元件
+<div class="flex">
+  <img src="./public/assets/guideline.png" class="max-h-[55vh] mx-auto" />
+</div>
 
 ---
-
-# listFormat
-項目符號清單
-- 分組給間隔
-<img src="./public/assets/list-padding.png" class="w-1/2" />
-
+routeAlias: test
 ---
 
-# listFormat
-項目符號清單
+# ✨ AI 寫測試
+- src/components/channelSelect/ChannelSelector.spec.ts
+- manualMode: false
 
-- 分組包 \<ul\> & 加上設計的樣式
 ```js
-let ulListItems = [];
-for (let i = 0; i < liListItems.length; i++) {
-  const current = liListItems[i];
-  const lastGroup = ulListItems[ulListItems.length - 1]; // 記錄群組第一筆的 index 和 item
-
-  if (lastGroup && current.index === lastGroup.index + lastGroup.item.length) { // 連續 item
-    lastGroup.item.push(current.item); // 存 item
-  } else { // 非連續的 item 另開一個 ulListItems 群組
-    ulListItems.push({
-      index: current.index,
-      item: [current.item],
+  it('does not override selected channel when manualMode is false', async () => {
+    const wrapper = createWrapper({
+      modelValue: { channelId: 'c1', channelName: 'Line', platform: 'line', oaId: null },
     });
-  }
-}
-/* 組合群組 */
-ulListItems = ulListItems.map((item) => ({
-  index: item.index,
-  item: `<ul style="padding: 4px 0 4px 24px;margin: 0;">${item.item.join('')}</ul>`,
-}));
-```
+    await flushPromises();
 
----
-
-# listFormat
-項目符號清單
-
-- 依照 index 順序組回陣列
-```js
-let combinedItems = [];
-combinedItems = [...others, ...ulListItems].sort((a, b) => a.index - b.index);
-```
-
----
-
-# listFormat
-- 項目符號清單
-  - \* 文字
-  - \- 文字
-- 數字列表
-  - 1. 文字
-  - 2. 文字
-
----
-
-# listFormat
-數字列表
-- 依是否符合條件分組
-```js
-const numberItems = [];
-combinedItems.forEach((item) => {
-  if (/^\d+\.\s/.test(item.item)) {
-    numberItems.push({ item: item.item, index: item.index });
-  } else {
-    others.push({ item: item.item, index: item.index });
-  }
-});
-```
-
----
-
-# listFormat
-數字列表
-- 分組給間隔
-<img src="./public/assets/list-padding.png" class="w-1/2" />
-
----
-
-# listFormat
-數字列表
-
-- 逐行套 \<li\> 並保留 index 用於後續分組
-```js
-const liListItems = numberItems.map((item) => {
-  const match = item.item.match(/^(\d+\.\s)(.*)/);
-  return {
-    index: item.index,
-    item: `<li value="${match[1].slice(0, -2)}">${match[2]}</li>`,
-  };
-});
-```
-
----
-
-# listFormat
-數字列表
-
-- 分組包 \<ol\> & 加上設計的樣式
-```js
-let olListItems = [];
-for (let i = 0; i < liListItems.length; i++) {
-  const current = liListItems[i];
-  const lastGroup = olListItems[olListItems.length - 1]; // 記錄群組第一筆的 index 和 item
-
-  if (lastGroup && current.index === lastGroup.index + lastGroup.item.length) { // 連續 item
-    lastGroup.item.push(current.item); // 存 item
-  } else { // 非連續的 item 另開一個 ulListItems 群組
-    olListItems.push({
-      index: current.index,
-      item: [current.item],
+    await wrapper.setProps({
+      modelValue: { channelId: 'c2', channelName: 'WA', platform: 'whatsapp', oaId: null },
     });
-  }
-}
-/* 組合群組 */
-olListItems = olListItems.map((item) => ({
-  index: item.index,
-  item: `<ol style="padding: 4px 0 4px 24px;margin: 0;">${item.item.join('')}</ol>`,
-}));
-```
+    await flushPromises();
 
----
-
-# listFormat
-數字列表
-
-- 依照 index 順序組回陣列
-```js
-combinedItems = [...others, ...olListItems].sort((a, b) => a.index - b.index);
-```
-
----
-
-# 🧱whatsappPreview.ts
-```js {1,8-9}
-export function whatsappTextFormat(text: string, type?: SENDER_TYPE) {
-  if (!text) return '';
-
-  /* 處理換行 */
-  let formattedText = text.replace(/\n/g, '<br>');
-  /* 處理項目符號、數字列表 */
-  formattedText = listFormat(formattedText);
-  /* 處理不支援交叉樣式的格式 */
-  formattedText = unsupportedCrossFormats(formattedText, type);
-  /* 處理其他格式規則，但跳過已經被 Monospace 和內嵌程式碼包住的內容 */
-  formattedText = otherFormat(formattedText);
-  /* 處理引用 */
-  formattedText = quoteFormat(formattedText, type);
-  /* 移除多餘的 <br> */
-  formattedText = formattedText.replace(/<\/ul>\s*<br\s*\/?>(?!\s*$)/gi, '</ul>');
-  formattedText = formattedText.replace(/<\/ol>\s*<br\s*\/?>(?!\s*$)/gi, '</ol>');
-
-  return formattedText;
-}
-```
-
----
-
-# unsupportedCrossFormats
-<img src="./public/assets/unsupportedCrossFormats.png" />
-
----
-
-# unsupportedCrossFormats
-先處理等寬字體 Monospace: \```text\```
-```js
-formattedText = formattedText.replace(
-  /```((?:(?!```)[\s\S])*?)```/g,
-  '<span style="font-family: monospace;">$1</span>'
-);
-```
-
----
-
-# unsupportedCrossFormats
-再處理 內嵌程式碼: \`text\`，要排除已經被 Monospace 包住的內容
-
-<img src="./public/assets/mono.png" class="w-1/3" />
-
-- 拆開每一行 
-```js
-let splitText = formattedText.split('<br>');
-```
-
----
-
-# unsupportedCrossFormats
-- 逐行套內嵌程式碼樣式
-```js
-splitText = splitText.map((text) => {
-  const result = text.replace(/(?:^|<br>|<li>|\s)`([^\s][^`]*?(?:(?!<br>)[^`])*?[^\s])`(?=\s|<br>|<\/li>|$)/g, (match, content) => {
-    // 檢查是否在 Monospace 標籤內
-    const startIndex = text.indexOf(match);
-    const beforeText = text.substring(0, startIndex);
-    const lastMonospaceStart = beforeText.lastIndexOf('<span style="font-family: monospace;">');
-    const lastMonospaceEnd = beforeText.lastIndexOf('</span>');
-
-    // 如果在 Monospace 標籤內，則不進行替換
-    if (lastMonospaceStart !== -1 && lastMonospaceStart > lastMonospaceEnd) {
-      return match;
-    }
-
-    // 保留原始的前綴和後綴
-    const prefix = match.match(/^(?:<br>|<li>|\s)/)?.[0] || '';
-    const suffix = match.match(/(?:\s|<br>|<\/li>|$)$/)?.[0] || '';
-
-    return `${prefix}<code style="background-color: #E9EBF1; color: #808080; padding: 1px 2px; border-radius: 2px; font-size: 12px; line-height: 16.4px; font-family: monaco, Consolas, 'Lucida Console', monospace;">${content}</code>${suffix}`;
-  });
-
-  return result;
+    const selectProps = wrapper.findComponent({ name: 'Select' }).props('modelValue') as any;
+    expect(selectProps.channelId).toBe('c1');
   });
 ```
 
 ---
 
-# unsupportedCrossFormats
-- 組合回字串
-```js
-formattedText = splitText.join('<br>');
-```
+# ✨ AI 寫測試 - createWrapper
+- src/components/channelSelect/ChannelSelector.spec.ts
+- manualMode: false
 
----
-
-# 🧱whatsappPreview.ts
-```js {1,10-11}
-export function whatsappTextFormat(text: string, type?: SENDER_TYPE) {
-  if (!text) return '';
-
-  /* 處理換行 */
-  let formattedText = text.replace(/\n/g, '<br>');
-  /* 處理項目符號、數字列表 */
-  formattedText = listFormat(formattedText);
-  /* 處理不支援交叉樣式的格式 */
-  formattedText = unsupportedCrossFormats(formattedText, type);
-  /* 處理其他格式規則，但跳過已經被 Monospace 和內嵌程式碼包住的內容 */
-  formattedText = otherFormat(formattedText);
-  /* 處理引用 */
-  formattedText = quoteFormat(formattedText, type);
-  /* 移除多餘的 <br> */
-  formattedText = formattedText.replace(/<\/ul>\s*<br\s*\/?>(?!\s*$)/gi, '</ul>');
-  formattedText = formattedText.replace(/<\/ol>\s*<br\s*\/?>(?!\s*$)/gi, '</ol>');
-
-  return formattedText;
-}
-```
-
----
-
-# otherFormat
-- 拆開每一行 
-```js
-let splitText = formattedText.split('<br>');
-```
-
----
-
-# otherFormat
-其他格式規則
-```js
-const otherFormatRules = [
-  /* 斜體: _text_ */
-  {},
-  /* 粗體: *text* */
-  {},
-  /* 刪除線: ~text~ */
-  {}
-];
-```
-
----
-
-# otherFormat
-斜體: \_text\_
-```js
-{
-  pattern: /(?:^|<br>|<li>|\s)_([^\s][^_]*?(?:(?!<br>)[^_])*?[^\s])_(?=\s|<br>|<\/li>|$)/g,
-  replace: (match, content) => {
-    // 保留原始的前綴和後綴
-    const prefix = match.match(/^(?:<br>|<li>|\s)/)?.[0] || '';
-    const suffix = match.match(/(?:\s|<br>|<\/li>|$)$/)?.[0] || '';
-
-    return `${prefix}<em style="white-space: pre-wrap;">${content}</em>${suffix}`;
-  }
-}
-```
-
----
-
-# otherFormat
-粗體: \*text\*
-```js
-{
-  pattern: /(?:^|<br>|<li>|\s)\*([^\s][^*]*?(?:(?!<br>)[^*])*?[^\s])\*(?=\s|<br>|<\/li>|$)/g,
-  replace: (match, content) => {
-    // 保留原始的前綴和後綴
-    const prefix = match.match(/^(?:<br>|<li>|\s)/)?.[0] || '';
-    const suffix = match.match(/(?:\s|<br>|<\/li>|$)$/)?.[0] || '';
-
-    return `${prefix}<strong style="white-space: pre-wrap;">${content}</strong>${suffix}`;
-  }
-}
-```
-
----
-
-# otherFormat
-刪除線: \~text\~
-```js
-{
-  pattern: /(?:^|<br>|<li>|\s)~([^\s][^~]*?(?:(?!<br>)[^~])*?[^\s])~(?=\s|<br>|<\/li>|$)/g,
-  replace: (match, content) => {
-    // 保留原始的前綴和後綴
-    const prefix = match.match(/^(?:<br>|<li>|\s)/)?.[0] || '';
-    const suffix = match.match(/(?:\s|<br>|<\/li>|$)$/)?.[0] || '';
-
-    return `${prefix}<del>${content}</del>${suffix}`;
-  }
-}
-```
-
----
-
-# otherFormat
-檢查匹配的內容是否在 Monospace 或內嵌程式碼標籤內
-```js
-  otherFormatRules.forEach((rule) => {
-    splitText = splitText.map((text) => {
-      const result = text.replace(rule.pattern, (match, ...args) => {
-        // 檢查匹配的內容是否在 Monospace 或內嵌程式碼標籤內
-        const startIndex = text.indexOf(match);
-        const endIndex = startIndex + match.length;
-
-        // 檢查是否在 <span style="font-family: monospace;"> 或 <code> 標籤內
-        const beforeText = text.substring(0, startIndex);
-        const afterText = text.substring(endIndex);
-
-        const lastMonospaceStart = beforeText.lastIndexOf('<span style="font-family: monospace;">');
-        const endLastMonospaceStart = beforeText.indexOf('</span>');
-        const nextMonospaceEnd = afterText.indexOf('</span>');
-        const lastCodeStart = beforeText.lastIndexOf('<code');
-        const endLastCodeStart = beforeText.lastIndexOf('</code>');
-        const nextCodeEnd = afterText.indexOf('</code>');
-```
----
-
-# otherFormat
-檢查匹配的內容是否在 Monospace 或內嵌程式碼標籤內
-```js
-        // 如果匹配的內容在 Monospace 或內嵌程式碼標籤內，則不進行替換
-        if (
-          (lastMonospaceStart !== -1 && (endLastMonospaceStart === -1 || endLastMonospaceStart < lastMonospaceStart) && nextMonospaceEnd !== -1)
-          || (lastCodeStart !== -1 && (endLastCodeStart === -1 || endLastCodeStart < lastCodeStart) && nextCodeEnd !== -1)
-        ) {
-          return match;
-        }
-
-        // 否則進行正常的替換
-        return rule.replace(match, ...args);
-      });
-      return result;
+```js{2}
+  it('does not override selected channel when manualMode is false', async () => {
+    const wrapper = createWrapper({
+      modelValue: { channelId: 'c1', channelName: 'Line', platform: 'line', oaId: null },
     });
-    formattedText = splitText.join('<br>');
+    [...]
+  });
+```
+
+- createWrapper 是測試裡的「元件掛載工具」
+
+---
+
+# ✨ AI 寫測試 - createWrapper
+- 用 createTestWrapper 去 mount ChannelSelector
+- 預先塞好 stub（Select、SvgIcon 等）
+- 讓每個測試不用重複寫一堆 mounting 設定
+- 只要傳 props 就能建立測試用的 wrapper
+
+```js
+const createWrapper = (props = {}) => createTestWrapper(ChannelSelector, props, {}, {
+  global: {
+    stubs: {
+      'Select': SelectStub,
+      'SvgIcon': { template: '<div />' },
+      'a-select-option': { template: '<div><slot /></div>' },
+      'a-tooltip': { template: '<div><slot /></div>' },
+    },
+  },
+});
+```
+
+---
+
+# ✨ AI 寫測試
+
+<div class="flex items-center gap-x-6">
+  <div class="w-1/3">
+    <div class="font-bold text-lg text-center">Stub</div>
+    <ul class="mt-2">
+      <li>用「替身實作」取代真的東西</li>
+      <li>例：把子元件用 <code>&lt;div /&gt;</code> 取代，或把 API 回傳固定資料</li>
+      <li>重點是提供簡化行為，讓測試不被外部依賴影響</li>
+    </ul>
+  </div>
+  <div class="w-1/3">
+    <div class="font-bold text-lg text-center">Mock</div>
+    <ul class="mt-2">
+      <li>可驗證的替身</li>
+      <li>例：<code>vi.fn()</code> 建立的函式，除了能取代原本實作，還能驗證有沒有被呼叫、被呼叫幾次、帶什麼參數</li>
+    </ul>
+  </div>
+  <div class="w-1/3">
+    <div class="font-bold text-lg text-center">Spy</div>
+    <ul class="mt-2">
+      <li>監聽真實實作</li>
+      <li>例：<code>vi.spyOn(obj, 'method')</code>，保留原本行為，但可以觀察呼叫資訊</li>
+      <li>重點是監控，不一定要替換</li>
+    </ul>
+  </div>
+</div>
+
+---
+
+# ✨ AI 寫測試
+- src/components/channelSelect/ChannelSelector.spec.ts
+- manualMode: false
+
+```js{5,10}
+  it('does not override selected channel when manualMode is false', async () => {
+    const wrapper = createWrapper({
+      modelValue: { channelId: 'c1', channelName: 'Line', platform: 'line', oaId: null },
+    });
+    await flushPromises();
+
+    await wrapper.setProps({
+      modelValue: { channelId: 'c2', channelName: 'WA', platform: 'whatsapp', oaId: null },
+    });
+    await flushPromises();
+
+    const selectProps = wrapper.findComponent({ name: 'Select' }).props('modelValue') as any;
+    expect(selectProps.channelId).toBe('c1');
   });
 ```
 
 ---
 
-# 🧱whatsappPreview.ts
-```js {1,12-13}
-export function whatsappTextFormat(text: string, type?: SENDER_TYPE) {
-  if (!text) return '';
+# ✨ AI 寫測試 - flushPromises()
 
-  /* 處理換行 */
-  let formattedText = text.replace(/\n/g, '<br>');
-  /* 處理項目符號、數字列表 */
-  formattedText = listFormat(formattedText);
-  /* 處理不支援交叉樣式的格式 */
-  formattedText = unsupportedCrossFormats(formattedText, type);
-  /* 處理其他格式規則，但跳過已經被 Monospace 和內嵌程式碼包住的內容 */
-  formattedText = otherFormat(formattedText);
-  /* 處理引用 */
-  formattedText = quoteFormat(formattedText, type);
-  /* 移除多餘的 <br> */
-  formattedText = formattedText.replace(/<\/ul>\s*<br\s*\/?>(?!\s*$)/gi, '</ul>');
-  formattedText = formattedText.replace(/<\/ol>\s*<br\s*\/?>(?!\s*$)/gi, '</ol>');
-
-  return formattedText;
-}
-```
-
----
-
-# quoteFormat
+## 1) 初次建立 wrapper 後
 ```js
-const quoteLines = formattedText.split('<br>').map((line) => {
-  if (line.trim().startsWith('> ')) {
-    return `<div style="padding: 4px 0; margin: 0;">
-              <div style="padding-left: 16px; border-left: 2px solid #7788AC; color: #7788AC;">
-                ${line.replace(/^> /, '')}
-              </div>
-            </div>`;
-  }
-  return line;
-});
-formattedText = quoteLines.join('<br>');
-
-// 移除引號後多餘的 <br>
-formattedText = formattedText.replace(/<\/div><br>/g, '</div>');
-
-return formattedText;
+const wrapper = createWrapper(...)
+await flushPromises();
 ```
 
-<img src="./public/assets/list-padding.png" class="w-1/4" />
+<ul>
+  <li>作用：等待元件初始化時的 watch、computed、以及可能的 async side effects 完成</li>
+  <li>原因
+    <ul>
+      <li>ChannelSelector 會依賴 store 的 channels、計算 filtered list，並在 watch 中同步 selectedChannel</li>
+      <li>flushPromises() 可確保 DOM / 狀態都穩定，再做後續操作，避免測試在 state 尚未同步前就驗證，造成 flaky</li>
+    </ul>
+  </li>
+</ul>
 
 ---
 
-# 🧱whatsappPreview.ts
+# ✨ AI 寫測試 - flushPromises()
+
+## 2) setProps 之後
 ```js
-export function whatsappTextFormat(text: string, type?: SENDER_TYPE) {
-  if (!text) return '';
-
-  /* 處理換行 */
-  let formattedText = text.replace(/\n/g, '<br>');
-  /* 處理項目符號、數字列表 */
-  formattedText = listFormat(formattedText);
-  /* 處理不支援交叉樣式的格式 */
-  formattedText = unsupportedCrossFormats(formattedText, type);
-  /* 處理其他格式規則，但跳過已經被 Monospace 和內嵌程式碼包住的內容 */
-  formattedText = otherFormat(formattedText);
-  /* 處理引用 */
-  formattedText = quoteFormat(formattedText, type);
-  /* 移除多餘的 <br> */
-  formattedText = formattedText.replace(/<\/ul>\s*<br\s*\/?>(?!\s*$)/gi, '</ul>');
-  formattedText = formattedText.replace(/<\/ol>\s*<br\s*\/?>(?!\s*$)/gi, '</ol>');
-
-  return formattedText;
-}
+await wrapper.setProps(...)
+await flushPromises();
 ```
+
+<ul>
+  <li>作用：等待 props 更新後觸發的 watch(() => props.modelValue, ...) 完成</li>
+  <li>原因
+    <ul>
+      <li>manualMode 的邏輯是在 watch 裡更新 selectedChannel，必須等 watcher 跑完，測試才會拿到正確的 state</li>
+    </ul>
+  </li>
+</ul>
+
 ---
 
-完成！
-謝謝收聽
+# ✨ AI 寫測試
+- src/components/channelSelect/ChannelSelector.spec.ts
+- manualMode: false
+
+```js
+  it('does not override selected channel when manualMode is false', async () => {
+    const wrapper = createWrapper({
+      modelValue: { channelId: 'c1', channelName: 'Line', platform: 'line', oaId: null },
+    });
+    await flushPromises();
+
+    await wrapper.setProps({
+      modelValue: { channelId: 'c2', channelName: 'WA', platform: 'whatsapp', oaId: null },
+    });
+    await flushPromises();
+
+    const selectProps = wrapper.findComponent({ name: 'Select' }).props('modelValue') as any;
+    expect(selectProps.channelId).toBe('c1');
+  });
+```
 
 ---
-theme: shibainu
-css: unocss
+
+# ✨ AI 寫測試
+- src/components/channelSelect/ChannelSelector.spec.ts
+- manualMode: true
+
+```js
+  it('updates selected channel when manualMode is true', async () => {
+    const wrapper = createWrapper({
+      manualMode: true,
+      modelValue: { channelId: 'c1', channelName: 'Line', platform: 'line', oaId: null },
+    });
+    await flushPromises();
+
+    await wrapper.setProps({
+      modelValue: { channelId: 'c2', channelName: 'WA', platform: 'whatsapp', oaId: null },
+    });
+    await flushPromises();
+
+    const selectProps = wrapper.findComponent({ name: 'Select' }).props('modelValue') as any;
+    expect(selectProps.channelId).toBe('c2');
+  });
+```
+
 ---
+
+# ✨ AI 寫測試
+- 基本設定
+<div class="flex">
+  <img src="./public/assets/test.png" class="max-h-[55vh] mx-auto" />
+</div>
+
+---
+layout: center
+class: text-center
+---
+
+<div class="text-6xl font-bold">結束</div>
+<div class="text-3xl mt-6">謝謝收聽</div>
 
 <style>
 .slidev-code {
   font-size: 10px !important;
+}
+.slidev-page-number {
+  display: block !important;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  font-size: 12px;
+  opacity: 0.6;
 }
 </style>
